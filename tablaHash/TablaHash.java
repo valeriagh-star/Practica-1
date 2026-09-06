@@ -211,4 +211,46 @@ public class TablaHash {
             }
         }
     }
+
+    public static void main(String[] args) {
+        System.out.println("========================================");
+        System.out.println("       1. PRUEBAS ENCADENAMIENTO ");
+        System.out.println("========================================");
+        TablaHashEncadenamiento enc = new TablaHashEncadenamiento(7);
+
+        enc.insertar(18, "Ana");
+        enc.insertar(10, "Luis");
+        enc.insertar(24, "Maria");
+        enc.insertar(31, "Carlos");
+
+        System.out.println("Estado inicial:");
+        enc.imprimirTabla();
+
+        System.out.println("\nBúsquedas:");
+        System.out.println("buscar(24) -> " + enc.buscar(24));
+        System.out.println("buscar(99) -> " + enc.buscar(99));
+
+        System.out.println("\nEliminando 24:");
+        enc.eliminar(24);
+        enc.imprimirTabla();
+
+        System.out.println("\n=============================================");
+        System.out.println("     2. PRUEBAS DIRECCIONAMIENTO ABIERTO ");
+        System.out.println("=============================================");
+        TablaHashDireccionamientoAbierto dir = new TablaHashDireccionamientoAbierto(7);
+
+        dir.insertar(10, "Luis");
+        dir.insertar(24, "Maria");
+        dir.insertar(31, "Carlos");
+
+        System.out.println("Estado inicial con Sondeo Lineal:");
+        dir.imprimirTabla();
+
+        System.out.println("\nEliminando llave 24:");
+        dir.eliminar(24);
+        dir.imprimirTabla();
+
+        System.out.println("\nBúsqueda de 31 a través de la marca DELETED:");
+        System.out.println("buscar(31) -> " + dir.buscar(31));
+    }
 }
