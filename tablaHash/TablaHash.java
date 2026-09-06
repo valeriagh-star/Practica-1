@@ -49,5 +49,30 @@ public class TablaHash {
                 System.out.println(i + " -> " + sb.toString());
             }
         }
+
+        public void insertar(int key, String value) {
+            int posicion = hash(key);
+            Nodo actual = tabla[posicion];
+
+            while (actual != null) {
+                if (actual.key == key) {
+                    actual.value = value;
+                    return;
+                }
+                actual = actual.siguiente;
+            }
+
+            Nodo nuevoNodo = new Nodo(key, value);
+            if (tabla[posicion] == null) {
+                tabla[posicion] = nuevoNodo;
+            } else {
+                Nodo aux = tabla[posicion];
+                while (aux.siguiente != null) {
+                    aux = aux.siguiente;
+                }
+                aux.siguiente = nuevoNodo;
+            }
+            n++;
+        }
     }
 }
