@@ -74,5 +74,18 @@ public class TablaHash {
             }
             n++;
         }
+        
+        public String buscar(int key) {
+            int posicion = hash(key);
+            Nodo actual = tabla[posicion];
+
+            while (actual != null) {
+                if (actual.key == key) {
+                    return actual.value;
+                }
+                actual = actual.siguiente;
+            }
+            return "NOT_FOUND";
+        }
     }
 }
