@@ -74,7 +74,7 @@ public class TablaHash {
             }
             n++;
         }
-        
+
         public String buscar(int key) {
             int posicion = hash(key);
             Nodo actual = tabla[posicion];
@@ -86,6 +86,27 @@ public class TablaHash {
                 actual = actual.siguiente;
             }
             return "NOT_FOUND";
+        }
+
+        public boolean eliminar(int key) {
+            int posicion = hash(key);
+            Nodo actual = tabla[posicion];
+            Nodo anterior = null;
+
+            while (actual != null) {
+                if (actual.key == key) {
+                    if (anterior == null) {
+                        tabla[posicion] = actual.siguiente;
+                    } else {
+                        anterior.siguiente = actual.siguiente;
+                    }
+                    n--;
+                    return true;
+                }
+                anterior = actual;
+                actual = actual.siguiente;
+            }
+            return false;
         }
     }
 }
