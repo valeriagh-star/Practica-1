@@ -109,4 +109,106 @@ public class TablaHash {
             return false;
         }
     }
+
+    public static class TablaHashDireccionamientoAbierto {
+        private static class Entrada {
+            int key;
+            String value;
+            boolean esDeleted;
+
+            Entrada(int key, String value) {
+                this.key = key;
+                this.value = value;
+                this.esDeleted = false;
+            }
+        }
+
+        private int m;
+        private int n;
+        private Entrada[] tabla;
+
+        public TablaHashDireccionamientoAbierto(int tamano) {
+            this.m = tamano;
+            this.n = 0;
+            this.tabla = new Entrada[m];
+        }
+
+        public TablaHashDireccionamientoAbierto() {
+            this(7);
+        }
+
+        public int hash(int key, int i) {
+            return (Math.abs(key) % m + i) % m;
+        }
+
+        public void insertar(int key, String value) {
+            if (n >= m) {
+                System.out.println("Error: Tabla llena.");
+                return;
+            }
+            int primerDeleted = -1;
+
+            for (int i = 0; i < m; i++) {
+                int pos = hash(key, i);
+                Entrada actual = tabla[pos];
+
+                if (actual == null) {
+                    int posInsertar = (primerDeleted != -1) ? primerDeleted : pos;
+                    tabla[posInsertar] = new Entrada(key, value);
+                    n++;
+                    return;
+                } else if (actual.esDeleted) {
+                    if (primerDeleted == -1) primerDeleted = pos;
+                } else if (actual.key == key) {
+                    actual.value = value;
+                    return;
+                }
+            }
+
+            if (primerDeleted != -1) {
+                tabla[primerDeleted] = new Entrada(key, value);
+                n++;
+            }
+        }
+
+        public String buscar(int key) {
+            for (int i = 0; i < m; i++) {
+                int pos = hash(key, i);
+                Entrada actual = tabla[pos];
+
+                if (actual == null) return "NOT_FOUND";
+                if (!actual.esDeleted && actual.key == key) {
+                    return actual.value;
+                }
+            }
+            return "NOT_FOUND";
+        }
+
+        public boolean eliminar(int key) {
+            for (int i = 0; i < m; i++) {
+                int pos = hash(key, i);
+                Entrada actual = tabla[pos];
+
+                if (actual == null) return false;
+                if (!actual.esDeleted && actual.key == key) {
+                    actual.esDeleted = true;
+                    n--;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void imprimirTabla() {
+            for (int i = 0; i < m; i++) {
+                if (tabla[i] == null) {
+                    System.out.println(i + " -> [VACIO]");
+                } else if (tabla[i].esDeleted) {
+                    System.out.println(i + " -> DELETED");
+                } else {
+                    System.out.println(i + " -> (" + tabla[i].key + ", " + tabla[i].value + ")");
+                }
+            }
+        }
+    }
 }
