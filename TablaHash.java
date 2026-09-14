@@ -1,5 +1,3 @@
-package tablaHash;
-
 public class TablaHash {
 
     public static class TablaHashEncadenamiento {
